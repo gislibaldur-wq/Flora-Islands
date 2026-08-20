@@ -1,8 +1,6 @@
-# Flóra Íslands – v7
+# Flóra Íslands – v8
 
-Breyting frá v6:
-- Rétt svar fær stórt `✓ RÉTT` merki ofan á myndinni og sterkan grænan ramma.
-- Rangt svar fær stórt `✕ RANGT` merki og sterkan rauðan ramma.
-- Litirnir sem tengja pörin haldast áfram, en niðurstaðan treystir ekki lengur bara á rautt/grænt.
-- Samantekt segir t.d. `✕ 2 röng · ✓ 2 rétt`.
-- Stækkun mynda og GitHub-flagging frá v6 er áfram til staðar.
+Breyting frá v7:
+- Rangt gisk er nú yfirstrikað í stað þess að sýna `vitlaust → rétt`.
+- Rétta heitið birtist beint fyrir neðan yfirstrikaða giskið.
+- `✕ RANGT` / `✓ RÉTT`, sterkir niðurstöðurammar, myndastækkun og flagging haldast óbreytt.

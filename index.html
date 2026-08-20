@@ -50,6 +50,8 @@ button.secondary{background:transparent;color:var(--ink);border:1px solid var(--
 .card.correct{outline:5px solid #24723c;outline-offset:-5px}
 .card.wrong{outline:5px solid #a9322b;outline-offset:-5px}
 .card.wrong .answer{background:#fff1ef;color:#842820}
+.card.wrong .answer .wrong-guess{text-decoration:line-through;text-decoration-thickness:2px;opacity:.72}
+.card.wrong .answer .correct-answer{display:block;margin-top:3px;text-decoration:none;font-weight:900;color:#183126}
 .card.correct .answer{background:#eef8ef;color:#1f6033}
 
 .zoom-btn{
@@ -497,7 +499,10 @@ $("#check").addEventListener("click",()=>{
   pairs.forEach(p=>{
     const c=getCard(p.imageIndex),plant=current[p.imageIndex],ok=p.name===plant.name;
     c.classList.add(ok?"correct":"wrong");c.querySelector(".latin").style.display="block";
-    if(!ok)c.querySelector(".answer").textContent=p.name+" → "+plant.name;
+    if(!ok){
+      const answer=c.querySelector(".answer");
+      answer.innerHTML=`<span class="wrong-guess">${p.name}</span><span class="correct-answer">${plant.name}</span>`;
+    }
     if(ok)right++;
   });
   score+=right;

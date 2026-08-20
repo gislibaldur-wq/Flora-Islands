@@ -1,11 +1,8 @@
-# Flóra Íslands – v5
+# Flóra Íslands – v7
 
-Leikurinn sýnir aðeins tegundir sem hafa staðfest íslenskt heiti í innbyggða nafnalistanum.
-Latnesk heiti eru því aldrei notuð sem svarmöguleikar.
-
-Gögn:
-- Annotated Checklist of Vascular Plants of Iceland, Náttúrufræðistofnun / GBIF.
-- Íslensk heiti byggð á *Íslenskt plöntutal* (Hörður Kristinsson 2008).
-- Myndir sóttar eftir fræðiheiti frá Wikimedia Commons.
-
-Settu `index.html`, `.nojekyll` og `README.md` í root á GitHub repository-inu.
+Breyting frá v6:
+- Rétt svar fær stórt `✓ RÉTT` merki ofan á myndinni og sterkan grænan ramma.
+- Rangt svar fær stórt `✕ RANGT` merki og sterkan rauðan ramma.
+- Litirnir sem tengja pörin haldast áfram, en niðurstaðan treystir ekki lengur bara á rautt/grænt.
+- Samantekt segir t.d. `✕ 2 röng · ✓ 2 rétt`.
+- Stækkun mynda og GitHub-flagging frá v6 er áfram til staðar.

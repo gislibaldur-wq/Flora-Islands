@@ -10,32 +10,92 @@
 }
 *{box-sizing:border-box}
 body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
-main{max-width:1050px;margin:auto;padding:18px 18px 34px}
+main{max-width:1280px;margin:auto;padding:18px 22px 36px}
 header{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:14px}
 h1{font-family:Georgia,serif;font-size:clamp(30px,4vw,48px);font-weight:500;margin:0;line-height:1}
 .sub{color:var(--muted);margin-top:6px;font-size:14px}.score{font-size:14px;text-align:right;white-space:nowrap}
 .status{font-size:12px;color:var(--muted);margin:8px 0 12px}
-.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
 .card{min-width:0;background:var(--card);border:4px solid transparent;border-radius:12px;overflow:hidden;cursor:pointer;box-shadow:0 1px 6px #0001;transition:.12s}
 .card:hover{transform:translateY(-1px)}.card.active{outline:3px solid #17261f;outline-offset:2px}
-.photo{aspect-ratio:4/3;background:#dfe3dc;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo{aspect-ratio:4/3;background:#e8ebe6;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative}
+.photo img{width:100%;height:100%;object-fit:contain;display:block;background:#e8ebe6}
 .photo .fallback{padding:14px;text-align:center;color:var(--muted);font-size:13px}
 .answer{min-height:36px;padding:7px 9px 8px;font-size:14px;font-weight:750;text-align:center}
 .latin{display:none;padding:0 8px 8px;font-size:11px;color:var(--muted);font-style:italic;text-align:center}
-.names{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0 12px}
+.names{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0 12px}
 .name{min-width:0;border:3px solid transparent;background:#fff;color:#14281e;border-radius:10px;padding:10px 8px;cursor:pointer;font-size:15px;font-weight:750;min-height:44px;box-shadow:0 1px 4px #0000000c}
 .name.active{outline:3px solid #17261f;outline-offset:2px}
 .actions{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap}
 button.action{border:0;border-radius:9px;padding:10px 16px;font-weight:750;cursor:pointer;background:var(--ink);color:white}
 button.secondary{background:transparent;color:var(--ink);border:1px solid var(--line)}
-#message{font-weight:750;margin-left:auto}
+#message{font-weight:850;margin-left:auto}
+#message.result{padding:9px 13px;border-radius:9px;background:#fff;border:2px solid var(--line)}
+#message.perfect{background:#e8f5e9;border-color:#24723c;color:#1f6033}
+#message.has-wrong{background:#fff0ee;border-color:#a9322b;color:#842820}
 .credits{font-size:11px;color:var(--muted);margin-top:16px;line-height:1.45}.credits a{color:inherit}
 .pair0{background:#d9ebff!important;border-color:#4a90d9!important}
 .pair1{background:#ffe4d5!important;border-color:#d87a46!important}
 .pair2{background:#e4f3dc!important;border-color:#6eaa54!important}
 .pair3{background:#eee0f6!important;border-color:#9564b5!important}
-.card.correct{box-shadow:inset 0 0 0 3px #2f7d46}.card.wrong{box-shadow:inset 0 0 0 3px #b6453b}
+.card.correct,.card.wrong{position:relative}
+.card.correct::after,.card.wrong::after{
+  position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  z-index:5;padding:6px 11px;border-radius:999px;
+  color:#fff;font-size:13px;font-weight:900;letter-spacing:.01em;
+  box-shadow:0 2px 8px #0005;white-space:nowrap;
+}
+.card.correct::after{content:"✓ RÉTT";background:#24723c}
+.card.wrong::after{content:"✕ RANGT";background:#a9322b}
+.card.correct{outline:5px solid #24723c;outline-offset:-5px}
+.card.wrong{outline:5px solid #a9322b;outline-offset:-5px}
+.card.wrong .answer{background:#fff1ef;color:#842820}
+.card.correct .answer{background:#eef8ef;color:#1f6033}
+
+.zoom-btn{
+  position:absolute;right:8px;top:8px;z-index:2;
+  border:0;border-radius:999px;background:#ffffffeb;color:#183126;
+  width:38px;height:38px;cursor:pointer;font-size:18px;font-weight:800;
+  box-shadow:0 1px 8px #0002;
+}
+.zoom-btn:hover{background:#fff}
+.flag-mini{
+  position:absolute;left:8px;top:8px;z-index:2;
+  border:0;border-radius:999px;background:#ffffffeb;color:#6b3a33;
+  min-width:38px;height:38px;padding:0 10px;cursor:pointer;font-size:14px;font-weight:800;
+  box-shadow:0 1px 8px #0002;
+}
+.modal{
+  position:fixed;inset:0;z-index:1000;background:#000b;
+  display:none;align-items:center;justify-content:center;padding:24px;
+}
+.modal.open{display:flex}
+.modal-panel{
+  width:min(1100px,96vw);max-height:94vh;background:#f7f7f3;color:#183126;
+  border-radius:16px;overflow:auto;box-shadow:0 12px 50px #0007;
+}
+.modal-image-wrap{
+  min-height:320px;max-height:78vh;background:#111;
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-image-wrap img{
+  width:100%;height:auto;max-height:78vh;object-fit:contain;display:block;
+}
+.modal-meta{
+  display:flex;gap:14px;align-items:center;justify-content:space-between;
+  padding:14px 16px;flex-wrap:wrap;
+}
+.modal-title{font-weight:800}
+.modal-latin{color:var(--muted);font-size:13px;font-style:italic}
+.modal-actions{display:flex;gap:8px;flex-wrap:wrap}
+.modal-actions button,.modal-actions a{
+  border:0;border-radius:9px;padding:10px 13px;font-weight:750;cursor:pointer;
+  text-decoration:none;font-size:14px;
+}
+.modal-close{background:#183126;color:#fff}
+.modal-flag{background:#f0ded7;color:#6b2f28}
+.modal-source{background:#e5e8e2;color:#183126}
+
 @media(max-width:700px){
   main{padding:14px 12px 28px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
   .names{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.answer{font-size:13px}.name{font-size:14px}
@@ -48,7 +108,7 @@ button.secondary{background:transparent;color:var(--ink);border:1px solid var(--
 <header>
   <div>
     <h1>Flóra Íslands</h1>
-    <div class="sub">Smelltu á mynd og síðan á rétta nafnið. Hvert par fær sinn lit.</div>
+    <div class="sub">Smelltu á mynd og síðan á rétta nafnið. Notaðu + til að skoða mynd stærri.</div>
   </div>
   <div class="score">Umferð <b id="round">1</b><br>Stig <b id="score">0</b></div>
 </header>
@@ -65,8 +125,28 @@ button.secondary{background:transparent;color:var(--ink);border:1px solid var(--
 
 <div class="credits">
   Tegundagögn: Annotated Checklist of Vascular Plants of Iceland, Náttúrufræðistofnun Íslands / GBIF, CC BY 4.0.
-  Íslensk heiti eru úr Íslensku plöntutali Náttúrufræðistofnunar. Myndir eru sóttar eftir fræðiheiti frá Wikimedia Commons þegar þær finnast.
+  Íslensk heiti eru úr Íslensku plöntutali Náttúrufræðistofnunar. Myndir eru sóttar eftir fræðiheiti frá Wikimedia Commons. Slæmar eða rangar myndir má flagga beint í GitHub Issues.
 </div>
+
+<div id="imageModal" class="modal" aria-hidden="true">
+  <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-image-wrap">
+      <img id="modalImage" alt="">
+    </div>
+    <div class="modal-meta">
+      <div>
+        <div id="modalTitle" class="modal-title"></div>
+        <div id="modalLatin" class="modal-latin"></div>
+      </div>
+      <div class="modal-actions">
+        <a id="modalSource" class="modal-source" href="#" target="_blank" rel="noopener">Opna mynd</a>
+        <button type="button" id="modalFlag" class="modal-flag">⚑ Flagga mynd</button>
+        <button type="button" id="modalClose" class="modal-close">Loka</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 </main>
 
 <script>
@@ -273,7 +353,7 @@ function popFour(){
 }
 
 async function newRound(){
-  checked=false;pairs=[];selectedImage=null;$("#message").textContent="";
+  checked=false;pairs=[];selectedImage=null;$("#message").textContent="";$("#message").className="";
   $("#check").disabled=true;$("#clear").disabled=true;
   current=popFour();
   current=current.map(p=>({...p,name:ICELANDIC_NAME_MAP[p.scientific]}));
@@ -289,7 +369,24 @@ async function newRound(){
     $("#grid").appendChild(c);
     getCommonsImage(p.scientific).then(url=>{
       const ph=c.querySelector(".photo");
-      ph.innerHTML=url?`<img src="${url}" alt="Mynd af ${p.scientific}">`:`<div class="fallback">Engin mynd fannst<br><i>${p.scientific}</i></div>`;
+      c.dataset.imageUrl=url || "";
+      if(url){
+        ph.innerHTML=`
+          <img src="${url}" alt="Mynd af ${p.scientific}">
+          <button type="button" class="flag-mini" title="Flagga mynd" aria-label="Flagga mynd">⚑</button>
+          <button type="button" class="zoom-btn" title="Skoða mynd stærri" aria-label="Skoða mynd stærri">＋</button>
+        `;
+        ph.querySelector(".zoom-btn").addEventListener("click",(ev)=>{
+          ev.stopPropagation();
+          openImageModal(i);
+        });
+        ph.querySelector(".flag-mini").addEventListener("click",(ev)=>{
+          ev.stopPropagation();
+          flagImage(i);
+        });
+      }else{
+        ph.innerHTML=`<div class="fallback">Engin mynd fannst<br><i>${p.scientific}</i></div>`;
+      }
     });
   });
 
@@ -327,7 +424,72 @@ function selectName(name){
   pairs=pairs.filter(p=>p.imageIndex!==selectedImage&&p.name!==name);
   pairs.push({imageIndex:selectedImage,name,colorIndex});selectedImage=null;renderPairs();
 }
-$("#clear").addEventListener("click",()=>{if(checked)return;pairs=[];selectedImage=null;$("#message").textContent="";renderPairs()});
+
+let modalImageIndex=null;
+
+function openImageModal(i){
+  const plant=current[i];
+  const card=getCard(i);
+  const url=card?.dataset.imageUrl;
+  if(!plant || !url) return;
+  modalImageIndex=i;
+  $("#modalImage").src=url;
+  $("#modalImage").alt=`Mynd af ${plant.name || plant.scientific}`;
+  $("#modalTitle").textContent=plant.name || "";
+  $("#modalLatin").textContent=plant.scientific;
+  $("#modalSource").href=url;
+  $("#imageModal").classList.add("open");
+  $("#imageModal").setAttribute("aria-hidden","false");
+  $("#modalClose").focus();
+}
+
+function closeImageModal(){
+  $("#imageModal").classList.remove("open");
+  $("#imageModal").setAttribute("aria-hidden","true");
+  $("#modalImage").src="";
+  modalImageIndex=null;
+}
+
+function issueUrlFor(i){
+  const plant=current[i];
+  const card=getCard(i);
+  const imageUrl=card?.dataset.imageUrl || "";
+  const title=`Slæm eða röng mynd: ${plant?.name || plant?.scientific || "óþekkt planta"}`;
+  const body=[
+    "### Planta",
+    `${plant?.name || ""} (${plant?.scientific || ""})`,
+    "",
+    "### Mynd",
+    imageUrl,
+    "",
+    "### Vandamál",
+    "- [ ] Röng tegund á mynd",
+    "- [ ] Mynd of óskýr / léleg",
+    "- [ ] Mynd sýnir plöntuna illa",
+    "- [ ] Annað",
+    "",
+    "Athugasemd:"
+  ].join("\\n");
+  return `https://github.com/gislibaldur-wq/Flora-Islands/issues/new?title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
+}
+
+function flagImage(i){
+  if(i===null || i===undefined) return;
+  window.open(issueUrlFor(i),"_blank","noopener");
+}
+
+$("#modalClose").addEventListener("click",closeImageModal);
+$("#imageModal").addEventListener("click",(e)=>{
+  if(e.target===$("#imageModal")) closeImageModal();
+});
+$("#modalFlag").addEventListener("click",()=>{
+  if(modalImageIndex!==null) flagImage(modalImageIndex);
+});
+document.addEventListener("keydown",(e)=>{
+  if(e.key==="Escape" && $("#imageModal").classList.contains("open")) closeImageModal();
+});
+
+$("#clear").addEventListener("click",()=>{if(checked)return;pairs=[];selectedImage=null;$("#message").textContent="";$("#message").className="";renderPairs()});
 $("#check").addEventListener("click",()=>{
   if(checked){round++;newRound();return}
   if(pairs.length<4){$("#message").textContent="Tengdu öll 4 pörin fyrst.";return}
@@ -338,7 +500,12 @@ $("#check").addEventListener("click",()=>{
     if(!ok)c.querySelector(".answer").textContent=p.name+" → "+plant.name;
     if(ok)right++;
   });
-  score+=right;$("#score").textContent=score;$("#message").textContent=`${right} af 4 rétt`;$("#check").textContent="Næsta umferð";
+  score+=right;
+  $("#score").textContent=score;
+  const wrong=4-right;
+  $("#message").textContent=wrong===0 ? "✓ Öll 4 rétt" : `✕ ${wrong} röng · ✓ ${right} rétt`;
+  $("#message").className=wrong===0 ? "result perfect" : "result has-wrong";
+  $("#check").textContent="Næsta umferð";
 });
 
 (async()=>{

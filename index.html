@@ -65,16 +65,14 @@ button.secondary{background:transparent;color:var(--ink);border:1px solid var(--
 
 <div class="credits">
   Tegundagögn: Annotated Checklist of Vascular Plants of Iceland, Náttúrufræðistofnun Íslands / GBIF, CC BY 4.0.
-  Myndir eru sóttar eftir fræðiheiti frá Wikimedia Commons þegar þær finnast.
+  Íslensk heiti eru úr Íslensku plöntutali Náttúrufræðistofnunar. Myndir eru sóttar eftir fræðiheiti frá Wikimedia Commons þegar þær finnast.
 </div>
 </main>
 
 <script>
 const DATASET_KEY="a762b932-2791-40cb-891e-e11aab6b4efe";
 
-/* Known Icelandic names are used first. GBIF vernacular-name records are then used
-   when available. Scientific name is retained as a last-resort fallback so a missing
-   common-name record never breaks the game. */
+/* Only taxa with verified Icelandic names are admitted to the game. Scientific names are never used as answer labels. */
 const ICELANDIC_NAME_MAP={
   "Thymus praecox":"Blóðberg",
   "Geranium sylvaticum":"Blágresi",
@@ -131,7 +129,89 @@ const ICELANDIC_NAME_MAP={
   "Anthoxanthum odoratum":"Ilmreyr",
   "Galium verum":"Gulmaðra",
   "Carex demissa":"Grænstör",
-  "Hydrocotyle vulgaris":"Vatnsnafli"
+  "Hydrocotyle vulgaris":"Vatnsnafli",
+  "Betula nana":"Fjalldrapi",
+  "Alnus sinuata":"Sitkaölur",
+  "Caltha palustris":"Hófsóley",
+  "Thalictrum alpinum":"Brjóstagras",
+  "Beckwithia glacialis":"Jöklasóley",
+  "Ranunculus acris":"Brennisóley",
+  "Ranunculus auricomus":"Sifjarsóley",
+  "Ranunculus hyperboreus":"Trefjasóley",
+  "Ranunculus pygmaeus":"Dvergsóley",
+  "Ranunculus repens":"Skriðsóley",
+  "Ranunculus reptans":"Flagasóley",
+  "Batrachium eradicatum":"Lónasóley",
+  "Papaver croceum":"Garðasól",
+  "Papaver radicatum":"Melasól",
+  "Cardamine bellidifolia":"Jöklaklukka",
+  "Cardamine hirsuta":"Lambaklukka",
+  "Cardamine pratensis":"Hrafnaklukka",
+  "Saxifraga paniculata":"Bergsteinbrjótur",
+  "Saxifraga rivularis":"Lækjasteinbrjótur",
+  "Saxifraga rosacea":"Toppasteinbrjótur",
+  "Viola canina":"Týsfjóla",
+  "Viola epipsila":"Birkifjóla",
+  "Viola palustris":"Mýrfjóla",
+  "Viola riviniana":"Skógfjóla",
+  "Viola tricolor":"Þrenningarfjóla",
+  "Epilobium alsinifolium":"Lindadúnurt",
+  "Epilobium anagallidifolium":"Fjalladúnurt",
+  "Epilobium ciliatum":"Vætudúnurt",
+  "Epilobium collinum":"Klappadúnurt",
+  "Epilobium hornemannii":"Heiðadúnurt",
+  "Myriophyllum alterniflorum":"Síkjamari",
+  "Myriophyllum sibiricum":"Vatnamari",
+  "Empetrum nigrum":"Krækilyng",
+  "Plantago major":"Græðisúra",
+  "Plantago maritima":"Kattartunga",
+  "Littorella uniflora":"Tjarnalaukur",
+  "Valeriana sambucifolia":"Hagabrúða",
+  "Succisa pratensis":"Stúfa",
+  "Knautia arvensis":"Rauðkollur",
+  "Campanula rotundifolia":"Bláklukka",
+  "Campanula uniflora":"Fjallabláklukka",
+  "Campanula glomerata":"Höfuðklukka",
+  "Erigeron borealis":"Jakobsfífill",
+  "Erigeron humilis":"Snækobbi",
+  "Erigeron uniflorus":"Fjallakobbi",
+  "Omalotheca norvegica":"Fjandafæla",
+  "Omalotheca supina":"Grámulla",
+  "Omalotheca sylvatica":"Grájurt",
+  "Gnaphalium uliginosum":"Grámygla",
+  "Leucanthemum vulgare":"Freyjubrá",
+  "Tussilago farfara":"Hóffífill",
+  "Senecio vulgaris":"Krossfífill",
+  "Sparganium natans":"Tjarnabrúsi",
+  "Paris quadrifolia":"Ferlaufungur",
+  "Tofieldia pusilla":"Sýkigras",
+  "Luzula multiflora":"Vallhæra",
+  "Carex macloviana":"Kollstör",
+  "Carex maritima":"Bjúgstör",
+  "Carex pulicaris":"Hagastör",
+  "Carex rariflora":"Hengistör",
+  "Carex rostrata":"Tjarnastör",
+  "Carex rufina":"Rauðstör",
+  "Carex rupestris":"Móastör",
+  "Carex salina":"Marstör",
+  "Carex saxatilis":"Hrafnastör",
+  "Carex serotina":"Gullstör",
+  "Carex subspathacea":"Flæðastör",
+  "Carex vaginata":"Slíðrastör",
+  "Danthonia decumbens":"Knjápuntur",
+  "Milium effusum":"Skrautpuntur",
+  "Hierochloe odorata":"Reyrgresi",
+  "Phleum alpinum":"Fjallafoxgras",
+  "Phleum pratense":"Vallarfoxgras",
+  "Alopecurus aequalis":"Vatnsliðagras",
+  "Alopecurus geniculatus":"Knjáliðagras",
+  "Alopecurus pratensis":"Háliðagras",
+  "Deschampsia alpina":"Fjallapuntur",
+  "Deschampsia beringensis":"Beringspuntur",
+  "Deschampsia cespitosa":"Snarrótarpuntur",
+  "Elymus alopex":"Kjarrhveiti",
+  "Elymus kronokensis":"Bláhveiti",
+  "Elytrigia repens":"Húsapuntur"
 };
 
 let round=1,score=0,pool=[],queue=[],current=[],pairs=[],selectedImage=null,checked=false;
@@ -160,26 +240,19 @@ async function loadChecklist(){
     key:x.key,
     scientific:canonical(x),
     fullScientific:x.scientificName || canonical(x)
-  })).filter(x=>x.scientific && !seen.has(x.scientific) && seen.add(x.scientific));
+  })).filter(x =>
+    x.scientific &&
+    ICELANDIC_NAME_MAP[x.scientific] &&
+    !seen.has(x.scientific) &&
+    seen.add(x.scientific)
+  );
 
   queue=shuffle(pool);
-  $("#status").textContent=`${pool.length} samþykktar tegundafærslur fundust í opinbera checklistanum.`;
+  $("#status").textContent=`${pool.length} tegundir með staðfest íslensk heiti eru virkar í þessari útgáfu.`;
 }
 
 async function getIcelandicName(p){
-  if(ICELANDIC_NAME_MAP[p.scientific]) return ICELANDIC_NAME_MAP[p.scientific];
-  try{
-    const r=await fetch(`https://api.gbif.org/v1/species/${p.key}/vernacularNames`);
-    if(!r.ok) throw 0;
-    const j=await r.json();
-    const arr=j.results || j || [];
-    const hit=arr.find(v=>{
-      const lang=String(v.language||v.languageCode||"").toLowerCase();
-      return lang==="is" || lang==="isl" || lang.includes("iceland");
-    });
-    if(hit?.vernacularName) return hit.vernacularName;
-  }catch(e){}
-  return p.scientific;
+  return ICELANDIC_NAME_MAP[p.scientific] || null;
 }
 
 async function getCommonsImage(scientific){
@@ -203,8 +276,7 @@ async function newRound(){
   checked=false;pairs=[];selectedImage=null;$("#message").textContent="";
   $("#check").disabled=true;$("#clear").disabled=true;
   current=popFour();
-  const names=await Promise.all(current.map(getIcelandicName));
-  current=current.map((p,i)=>({...p,name:names[i]}));
+  current=current.map(p=>({...p,name:ICELANDIC_NAME_MAP[p.scientific]}));
 
   $("#grid").innerHTML="";
   $("#names").innerHTML="";

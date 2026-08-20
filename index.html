@@ -3,163 +3,43 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Flóra Íslands – Pörunarleikur</title>
+<title>Flóra Íslands</title>
 <style>
 :root{
-  --bg:#f3f0e7;
-  --card:#ffffff;
-  --ink:#183126;
-  --muted:#6f776f;
-  --line:#cfd6ce;
-  --good:#dcebdd;
-  --bad:#f4d8d2;
+  --bg:#f3f0e7;--card:#fff;--ink:#183126;--muted:#6f776f;--line:#cfd6ce;
 }
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:var(--bg);
-  color:var(--ink);
-}
-main{
-  max-width:1050px;
-  margin:auto;
-  padding:18px 18px 34px;
-}
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:18px;
-  margin-bottom:14px;
-}
-h1{
-  font-family:Georgia,serif;
-  font-size:clamp(30px,4vw,48px);
-  font-weight:500;
-  margin:0;
-  line-height:1;
-}
-.sub{color:var(--muted);margin-top:6px;font-size:14px}
-.score{font-size:14px;text-align:right;white-space:nowrap}
-
-/* Four compact images always visible together on desktop */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:12px;
-}
-.card{
-  min-width:0;
-  background:var(--card);
-  border:4px solid transparent;
-  border-radius:12px;
-  overflow:hidden;
-  cursor:pointer;
-  box-shadow:0 1px 6px #00000010;
-  transition:border-color .12s, transform .12s, opacity .12s;
-}
-.card:hover{transform:translateY(-1px)}
-.card.active{outline:3px solid #17261f;outline-offset:2px}
-.photo{
-  aspect-ratio:4/3;
-  background:#dfe3dc;
-  overflow:hidden;
-}
-.photo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-.answer{
-  min-height:36px;
-  padding:7px 9px 8px;
-  font-size:14px;
-  font-weight:750;
-  text-align:center;
-  color:var(--ink);
-}
-.latin{
-  display:none;
-  padding:0 8px 8px;
-  font-size:11px;
-  color:var(--muted);
-  font-style:italic;
-  text-align:center;
-}
-
-.names{
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:10px;
-  margin:14px 0 12px;
-}
-.name{
-  min-width:0;
-  border:3px solid transparent;
-  background:#fff;
-  color:#14281e;
-  border-radius:10px;
-  padding:10px 8px;
-  cursor:pointer;
-  font-size:15px;
-  font-weight:750;
-  min-height:44px;
-  box-shadow:0 1px 4px #0000000c;
-}
+body{margin:0;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--ink)}
+main{max-width:1050px;margin:auto;padding:18px 18px 34px}
+header{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:14px}
+h1{font-family:Georgia,serif;font-size:clamp(30px,4vw,48px);font-weight:500;margin:0;line-height:1}
+.sub{color:var(--muted);margin-top:6px;font-size:14px}.score{font-size:14px;text-align:right;white-space:nowrap}
+.status{font-size:12px;color:var(--muted);margin:8px 0 12px}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.card{min-width:0;background:var(--card);border:4px solid transparent;border-radius:12px;overflow:hidden;cursor:pointer;box-shadow:0 1px 6px #0001;transition:.12s}
+.card:hover{transform:translateY(-1px)}.card.active{outline:3px solid #17261f;outline-offset:2px}
+.photo{aspect-ratio:4/3;background:#dfe3dc;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo .fallback{padding:14px;text-align:center;color:var(--muted);font-size:13px}
+.answer{min-height:36px;padding:7px 9px 8px;font-size:14px;font-weight:750;text-align:center}
+.latin{display:none;padding:0 8px 8px;font-size:11px;color:var(--muted);font-style:italic;text-align:center}
+.names{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:14px 0 12px}
+.name{min-width:0;border:3px solid transparent;background:#fff;color:#14281e;border-radius:10px;padding:10px 8px;cursor:pointer;font-size:15px;font-weight:750;min-height:44px;box-shadow:0 1px 4px #0000000c}
 .name.active{outline:3px solid #17261f;outline-offset:2px}
-.name.paired{color:#14281e}
-
-.actions{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  margin-top:8px;
-}
-button.action{
-  border:0;
-  border-radius:9px;
-  padding:10px 16px;
-  font-weight:750;
-  cursor:pointer;
-  background:var(--ink);
-  color:white;
-}
-button.secondary{
-  background:transparent;
-  color:var(--ink);
-  border:1px solid var(--line);
-}
-#message{
-  font-weight:750;
-  margin-left:auto;
-}
-.credits{
-  font-size:11px;
-  color:var(--muted);
-  margin-top:16px;
-  line-height:1.4;
-}
-.credits a{color:inherit}
-
-/* Pair colours */
-.pair0{background:#d9ebff !important;border-color:#4a90d9 !important}
-.pair1{background:#ffe4d5 !important;border-color:#d87a46 !important}
-.pair2{background:#e4f3dc !important;border-color:#6eaa54 !important}
-.pair3{background:#eee0f6 !important;border-color:#9564b5 !important}
-
-.card.correct{box-shadow:inset 0 0 0 3px #2f7d46}
-.card.wrong{box-shadow:inset 0 0 0 3px #b6453b}
-
+.actions{display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap}
+button.action{border:0;border-radius:9px;padding:10px 16px;font-weight:750;cursor:pointer;background:var(--ink);color:white}
+button.secondary{background:transparent;color:var(--ink);border:1px solid var(--line)}
+#message{font-weight:750;margin-left:auto}
+.credits{font-size:11px;color:var(--muted);margin-top:16px;line-height:1.45}.credits a{color:inherit}
+.pair0{background:#d9ebff!important;border-color:#4a90d9!important}
+.pair1{background:#ffe4d5!important;border-color:#d87a46!important}
+.pair2{background:#e4f3dc!important;border-color:#6eaa54!important}
+.pair3{background:#eee0f6!important;border-color:#9564b5!important}
+.card.correct{box-shadow:inset 0 0 0 3px #2f7d46}.card.wrong{box-shadow:inset 0 0 0 3px #b6453b}
 @media(max-width:700px){
-  main{padding:14px 12px 28px}
-  header{align-items:start}
-  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-  .names{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-  .answer{min-height:32px;font-size:13px;padding:6px}
-  .name{font-size:14px;padding:9px 6px}
-  .score{font-size:12px}
+  main{padding:14px 12px 28px}.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .names{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.answer{font-size:13px}.name{font-size:14px}
+  header{align-items:start}.score{font-size:12px}
 }
 </style>
 </head>
@@ -173,211 +53,231 @@ button.secondary{
   <div class="score">Umferð <b id="round">1</b><br>Stig <b id="score">0</b></div>
 </header>
 
+<div id="status" class="status">Hleð plöntusafni…</div>
 <div id="grid" class="grid"></div>
 <div id="names" class="names"></div>
 
 <div class="actions">
-  <button class="action" id="check">Athuga</button>
-  <button class="action secondary" id="clear">Hreinsa</button>
+  <button class="action" id="check" disabled>Athuga</button>
+  <button class="action secondary" id="clear" disabled>Hreinsa</button>
   <span id="message"></span>
 </div>
 
 <div class="credits">
-  Myndir: Náttúrufræðistofnun Íslands,
-  <a href="https://www.natt.is/" target="_blank">natt.is</a>.
+  Tegundagögn: Annotated Checklist of Vascular Plants of Iceland, Náttúrufræðistofnun Íslands / GBIF, CC BY 4.0.
+  Myndir eru sóttar eftir fræðiheiti frá Wikimedia Commons þegar þær finnast.
 </div>
 </main>
 
 <script>
-const plants=[
- {
-  name:"Blóðberg",
-  latin:"Thymus praecox",
-  image:"https://www.natt.is/sites/default/files/styles/original_medium/public/externals/74bba68b7f97d89f5baaefdef94ec6a9.jpg?itok=10yyjPz0",
-  page:"https://www.natt.is/is/biota/plantae/tracheophyta/magnoliopsida/lamiaceae/blodberg-thymus-praecox"
- },
- {
-  name:"Blágresi",
-  latin:"Geranium sylvaticum",
-  image:"https://www.natt.is/sites/default/files/styles/original_medium/public/externals/66fc11b34582e61f0eeda62fad68e63b.jpg?itok=kPpOwZ0q",
-  page:"https://www.natt.is/is/biota/plantae/tracheophyta/magnoliopsida/geraniaceae/blagresi-geranium-sylvaticum"
- },
- {
-  name:"Burnirót",
-  latin:"Rhodiola rosea",
-  image:"https://www.natt.is/sites/default/files/styles/original_medium/public/externals/9675ecf38297f6f5d95ef2162cf0606b.jpg?itok=80QrHDQc",
-  page:"https://www.natt.is/is/biota/plantae/tracheophyta/magnoliopsida/crassulaceae/burnirot-rhodiola-rosea"
- },
- {
-  name:"Brennisóley",
-  latin:"Ranunculus subborealis",
-  image:"https://www.natt.is/sites/default/files/styles/original_medium/public/externals/af40afecfe34a64305abdf2e9939559e.jpg?itok=aff8Ho5-",
-  page:"https://www.natt.is/is/biota/plantae/tracheophyta/magnoliopsida/ranunculaceae/brennisoley-ranunculus-subborealis"
- }
-];
+const DATASET_KEY="a762b932-2791-40cb-891e-e11aab6b4efe";
 
-let round=1;
-let score=0;
-let current=[];
-let pairs=[]; // {imageIndex, name, colorIndex}
-let selectedImage=null;
-let checked=false;
+/* Known Icelandic names are used first. GBIF vernacular-name records are then used
+   when available. Scientific name is retained as a last-resort fallback so a missing
+   common-name record never breaks the game. */
+const ICELANDIC_NAME_MAP={
+  "Thymus praecox":"Blóðberg",
+  "Geranium sylvaticum":"Blágresi",
+  "Rhodiola rosea":"Burnirót",
+  "Ranunculus subborealis":"Brennisóley",
+  "Betula pubescens":"Birki",
+  "Juniperus communis":"Einir",
+  "Vaccinium uliginosum":"Bláberjalyng",
+  "Dryas octopetala":"Holtasóley",
+  "Trifolium repens":"Hvítsmári",
+  "Huperzia selago":"Skollafingur",
+  "Lycopodium annotinum":"Lyngjafni",
+  "Lycopodium clavatum":"Burstajafni",
+  "Diphasiastrum alpinum":"Litunarjafni",
+  "Selaginella selaginoides":"Mosajafni",
+  "Isoetes echinospora":"Álftalaukur",
+  "Isoetes lacustris":"Vatnalaukur",
+  "Equisetum arvense":"Klóelfting",
+  "Equisetum fluviatile":"Fergin",
+  "Equisetum hyemale":"Eski",
+  "Equisetum palustre":"Mýrelfting",
+  "Equisetum pratense":"Vallelfting",
+  "Equisetum sylvaticum":"Skógelfting",
+  "Equisetum variegatum":"Beitieski",
+  "Ophioglossum azoricum":"Naðurtunga",
+  "Botrychium boreale":"Mánajurt",
+  "Botrychium lanceolatum":"Lensutungljurt",
+  "Botrychium lunaria":"Tungljurt",
+  "Botrychium minganense":"Keilutungljurt",
+  "Botrychium simplex":"Dvergtungljurt",
+  "Cryptogramma crispa":"Hlíðaburkni",
+  "Hymenophyllum wilsonii":"Mosaburkni",
+  "Asplenium septentrionale":"Skeggburkni",
+  "Asplenium viride":"Klettaburkni",
+  "Athyrium filix-femina":"Fjöllaufungur",
+  "Athyrium distentifolium":"Þúsundblaðarós",
+  "Blechnum spicant":"Skollakambur",
+  "Polypodium vulgare":"Köldugras",
+  "Gymnocarpium dryopteris":"Þrílaufungur",
+  "Phegopteris connectilis":"Þríhyrnuburkni",
+  "Polystichum lonchitis":"Skjaldburkni",
+  "Dryopteris filix-mas":"Stóriburkni",
+  "Dryopteris expansa":"Dílaburkni",
+  "Triglochin palustris":"Mýrasauðlaukur",
+  "Triglochin maritima":"Strandsauðlaukur",
+  "Potamogeton natans":"Blöðkunykra",
+  "Potamogeton alpinus":"Fjallnykra",
+  "Potamogeton gramineus":"Grasnykra",
+  "Potamogeton perfoliatus":"Hjartanykra",
+  "Potamogeton praelongus":"Langnykra",
+  "Ruppia maritima":"Lónajurt",
+  "Nardus stricta":"Finnungur",
+  "Leymus arenarius":"Melgresi",
+  "Anthoxanthum odoratum":"Ilmreyr",
+  "Galium verum":"Gulmaðra",
+  "Carex demissa":"Grænstör",
+  "Hydrocotyle vulgaris":"Vatnsnafli"
+};
 
+let round=1,score=0,pool=[],queue=[],current=[],pairs=[],selectedImage=null,checked=false;
 const shuffle=a=>[...a].sort(()=>Math.random()-.5);
+const $=s=>document.querySelector(s);
 
-function getCard(i){ return document.querySelector(`.card[data-i="${i}"]`); }
-function getNameButton(name){ return document.querySelector(`.name[data-name="${CSS.escape(name)}"]`); }
-
-function clearPairClasses(el){
-  if(!el) return;
-  el.classList.remove("pair0","pair1","pair2","pair3","active","correct","wrong");
+function canonical(x){
+  return (x.canonicalName || x.scientificName || "").replace(/\s+\(.*/,"").trim();
 }
 
-function nextColorIndex(){
-  const used=new Set(pairs.map(p=>p.colorIndex));
-  for(let i=0;i<4;i++) if(!used.has(i)) return i;
-  return 0;
-}
-
-function renderPairs(){
-  document.querySelectorAll(".card").forEach(c=>{
-    clearPairClasses(c);
-    c.querySelector(".answer").textContent="";
-  });
-  document.querySelectorAll(".name").forEach(b=>{
-    clearPairClasses(b);
-    b.classList.remove("paired");
-  });
-
-  pairs.forEach(p=>{
-    const c=getCard(p.imageIndex);
-    const b=getNameButton(p.name);
-    c.classList.add("pair"+p.colorIndex);
-    b.classList.add("pair"+p.colorIndex,"paired");
-    c.querySelector(".answer").textContent=p.name;
-  });
-
-  if(selectedImage!==null){
-    getCard(selectedImage)?.classList.add("active");
+async function loadChecklist(){
+  const all=[];
+  let offset=0;
+  while(true){
+    const u=`https://api.gbif.org/v1/species/search?datasetKey=${DATASET_KEY}&rank=SPECIES&status=ACCEPTED&limit=300&offset=${offset}`;
+    const r=await fetch(u);
+    if(!r.ok) throw new Error("GBIF svaraði ekki");
+    const j=await r.json();
+    all.push(...j.results);
+    if(j.endOfRecords) break;
+    offset+=j.limit;
+    if(offset>3000) break;
   }
+  const seen=new Set();
+  pool=all.map(x=>({
+    key:x.key,
+    scientific:canonical(x),
+    fullScientific:x.scientificName || canonical(x)
+  })).filter(x=>x.scientific && !seen.has(x.scientific) && seen.add(x.scientific));
+
+  queue=shuffle(pool);
+  $("#status").textContent=`${pool.length} samþykktar tegundafærslur fundust í opinbera checklistanum.`;
 }
 
-function newRound(){
-  checked=false;
-  pairs=[];
-  selectedImage=null;
-  document.getElementById("message").textContent="";
-  current=shuffle(plants).slice(0,4);
+async function getIcelandicName(p){
+  if(ICELANDIC_NAME_MAP[p.scientific]) return ICELANDIC_NAME_MAP[p.scientific];
+  try{
+    const r=await fetch(`https://api.gbif.org/v1/species/${p.key}/vernacularNames`);
+    if(!r.ok) throw 0;
+    const j=await r.json();
+    const arr=j.results || j || [];
+    const hit=arr.find(v=>{
+      const lang=String(v.language||v.languageCode||"").toLowerCase();
+      return lang==="is" || lang==="isl" || lang.includes("iceland");
+    });
+    if(hit?.vernacularName) return hit.vernacularName;
+  }catch(e){}
+  return p.scientific;
+}
 
-  const grid=document.getElementById("grid");
-  const names=document.getElementById("names");
-  grid.innerHTML="";
-  names.innerHTML="";
+async function getCommonsImage(scientific){
+  const q=encodeURIComponent(scientific);
+  const api=`https://commons.wikimedia.org/w/api.php?origin=*&action=query&generator=search&gsrsearch=${q}%20plant&gsrnamespace=6&gsrlimit=8&prop=imageinfo&iiprop=url&iiurlwidth=700&format=json`;
+  try{
+    const j=await fetch(api).then(r=>r.json());
+    const pages=Object.values(j.query?.pages||{}).filter(p=>/\.(jpg|jpeg|png|webp)$/i.test(p.title||""));
+    if(!pages.length) return null;
+    const p=pages[0], ii=p.imageinfo?.[0];
+    return ii?.thumburl || ii?.url || null;
+  }catch(e){ return null; }
+}
+
+function popFour(){
+  if(queue.length<4) queue=shuffle(pool);
+  return [queue.pop(),queue.pop(),queue.pop(),queue.pop()];
+}
+
+async function newRound(){
+  checked=false;pairs=[];selectedImage=null;$("#message").textContent="";
+  $("#check").disabled=true;$("#clear").disabled=true;
+  current=popFour();
+  const names=await Promise.all(current.map(getIcelandicName));
+  current=current.map((p,i)=>({...p,name:names[i]}));
+
+  $("#grid").innerHTML="";
+  $("#names").innerHTML="";
 
   current.forEach((p,i)=>{
     const c=document.createElement("button");
-    c.type="button";
-    c.className="card";
-    c.dataset.i=i;
-    c.setAttribute("aria-label",`Velja mynd ${i+1}`);
-    c.innerHTML=`
-      <div class="photo">
-        <img src="${p.image}" alt="Plöntumynd ${i+1}">
-      </div>
-      <div class="answer"></div>
-      <div class="latin">${p.latin}</div>
-    `;
+    c.type="button";c.className="card";c.dataset.i=i;c.setAttribute("aria-label",`Velja mynd ${i+1}`);
+    c.innerHTML=`<div class="photo"><div class="fallback">Sæki mynd…</div></div><div class="answer"></div><div class="latin">${p.scientific}</div>`;
     c.addEventListener("click",()=>selectImage(i));
-    grid.appendChild(c);
+    $("#grid").appendChild(c);
+    getCommonsImage(p.scientific).then(url=>{
+      const ph=c.querySelector(".photo");
+      ph.innerHTML=url?`<img src="${url}" alt="Mynd af ${p.scientific}">`:`<div class="fallback">Engin mynd fannst<br><i>${p.scientific}</i></div>`;
+    });
   });
 
   shuffle(current).forEach(p=>{
     const b=document.createElement("button");
-    b.type="button";
-    b.className="name";
-    b.textContent=p.name;
-    b.dataset.name=p.name;
+    b.type="button";b.className="name";b.textContent=p.name;b.dataset.name=p.name;
     b.addEventListener("click",()=>selectName(p.name));
-    names.appendChild(b);
+    $("#names").appendChild(b);
   });
 
-  document.getElementById("round").textContent=round;
-  document.getElementById("check").textContent="Athuga";
+  $("#round").textContent=round;$("#check").textContent="Athuga";
+  $("#check").disabled=false;$("#clear").disabled=false;
 }
 
-function selectImage(i){
-  if(checked) return;
+function getCard(i){return document.querySelector(`.card[data-i="${i}"]`)}
+function getNameButton(name){return [...document.querySelectorAll(".name")].find(x=>x.dataset.name===name)}
+function clearPairClasses(el){if(el)el.classList.remove("pair0","pair1","pair2","pair3","active","correct","wrong")}
+function nextColorIndex(){const used=new Set(pairs.map(p=>p.colorIndex));for(let i=0;i<4;i++)if(!used.has(i))return i;return 0}
 
-  // Clicking an already paired image selects it for re-pairing.
-  selectedImage=i;
-  renderPairs();
-}
-
-function selectName(name){
-  if(checked || selectedImage===null) return;
-
-  // Remove any existing pair that uses this image or this name.
-  const existingForImage=pairs.find(p=>p.imageIndex===selectedImage);
-  const existingForName=pairs.find(p=>p.name===name);
-  let colorIndex;
-
-  if(existingForImage){
-    colorIndex=existingForImage.colorIndex;
-  }else if(existingForName){
-    colorIndex=existingForName.colorIndex;
-  }else{
-    colorIndex=nextColorIndex();
-  }
-
-  pairs=pairs.filter(p=>p.imageIndex!==selectedImage && p.name!==name);
-  pairs.push({imageIndex:selectedImage,name,colorIndex});
-
-  selectedImage=null;
-  renderPairs();
-}
-
-document.getElementById("clear").addEventListener("click",()=>{
-  if(checked) return;
-  pairs=[];
-  selectedImage=null;
-  document.getElementById("message").textContent="";
-  renderPairs();
-});
-
-document.getElementById("check").addEventListener("click",()=>{
-  if(checked){
-    round++;
-    newRound();
-    return;
-  }
-
-  if(pairs.length<4){
-    document.getElementById("message").textContent="Tengdu öll 4 pörin fyrst.";
-    return;
-  }
-
-  checked=true;
-  let right=0;
-
+function renderPairs(){
+  document.querySelectorAll(".card").forEach(c=>{clearPairClasses(c);c.querySelector(".answer").textContent=""});
+  document.querySelectorAll(".name").forEach(b=>clearPairClasses(b));
   pairs.forEach(p=>{
-    const c=getCard(p.imageIndex);
-    const plant=current[p.imageIndex];
-    const ok=p.name===plant.name;
-    c.classList.add(ok?"correct":"wrong");
-    c.querySelector(".latin").style.display="block";
-    if(!ok){
-      c.querySelector(".answer").textContent=p.name+" → "+plant.name;
-    }
-    if(ok) right++;
+    const c=getCard(p.imageIndex),b=getNameButton(p.name);
+    c.classList.add("pair"+p.colorIndex);b?.classList.add("pair"+p.colorIndex);
+    c.querySelector(".answer").textContent=p.name;
   });
-
-  score+=right;
-  document.getElementById("score").textContent=score;
-  document.getElementById("message").textContent=`${right} af 4 rétt`;
-  document.getElementById("check").textContent="Næsta umferð";
+  if(selectedImage!==null)getCard(selectedImage)?.classList.add("active");
+}
+function selectImage(i){if(checked)return;selectedImage=i;renderPairs()}
+function selectName(name){
+  if(checked||selectedImage===null)return;
+  const a=pairs.find(p=>p.imageIndex===selectedImage),b=pairs.find(p=>p.name===name);
+  const colorIndex=a?.colorIndex ?? b?.colorIndex ?? nextColorIndex();
+  pairs=pairs.filter(p=>p.imageIndex!==selectedImage&&p.name!==name);
+  pairs.push({imageIndex:selectedImage,name,colorIndex});selectedImage=null;renderPairs();
+}
+$("#clear").addEventListener("click",()=>{if(checked)return;pairs=[];selectedImage=null;$("#message").textContent="";renderPairs()});
+$("#check").addEventListener("click",()=>{
+  if(checked){round++;newRound();return}
+  if(pairs.length<4){$("#message").textContent="Tengdu öll 4 pörin fyrst.";return}
+  checked=true;let right=0;
+  pairs.forEach(p=>{
+    const c=getCard(p.imageIndex),plant=current[p.imageIndex],ok=p.name===plant.name;
+    c.classList.add(ok?"correct":"wrong");c.querySelector(".latin").style.display="block";
+    if(!ok)c.querySelector(".answer").textContent=p.name+" → "+plant.name;
+    if(ok)right++;
+  });
+  score+=right;$("#score").textContent=score;$("#message").textContent=`${right} af 4 rétt`;$("#check").textContent="Næsta umferð";
 });
 
-newRound();
+(async()=>{
+  try{
+    await loadChecklist();
+    await newRound();
+  }catch(e){
+    $("#status").textContent="Ekki tókst að hlaða opinbera plöntulistanum. Reyndu að endurhlaða síðuna.";
+    console.error(e);
+  }
+})();
 </script>
 </body>
 </html>

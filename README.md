@@ -1,32 +1,32 @@
-# Flóra Íslands – Pörunarleikur
+# Flóra Íslands – GitHub Pages útgáfa
 
-Einfaldur vefleikur þar sem spilarinn tengir fjórar íslenskar plöntumyndir við rétt nöfn.
+Þessi útgáfa notar opinbera **Annotated Checklist of Vascular Plants of Iceland**
+frá Náttúrufræðistofnun Íslands í gegnum GBIF.
 
-## Keyrsla
+## Hvernig leikurinn vinnur
 
-Opnaðu `index.html` í vafra.
+- Sækir samþykktar tegundafærslur úr íslenska æðplöntu-checklistanum.
+- Velur fjórar plöntur í hverri umferð.
+- Reynir að sækja íslenskt heiti úr GBIF; fyrir algengar tegundir er líka innbyggður íslenskur nafnalisti.
+- Sækir mynd eftir fræðiheiti frá Wikimedia Commons.
+- Fer í gegnum stokkuð safn áður en byrjað er aftur á því.
+- Pörun er gerð með litum: mynd + nafn fá sama lit.
 
-## Birting með GitHub Pages
+## Mikilvægt
 
-1. Búðu til nýtt GitHub repository, t.d. `flora-islands-game`.
-2. Hladdu öllum skrám úr þessari möppu inn í repository-ið.
-3. Farðu í **Settings → Pages**.
-4. Undir **Build and deployment**, veldu:
-   - **Source:** Deploy from a branch
-   - **Branch:** `main`
-   - **Folder:** `/ (root)`
-5. Vistaðu.
+Checklistinn inniheldur fleiri samþykktar taxa en eingöngu þær ~490 æðplöntur sem almennt
+eru sagðar vaxa villtar á Íslandi, því 2020-listinn inniheldur einnig ýmsa aðflutta taxa og fleiri
+flokkunarfærslur. Næsta gagnahreinsunarskref er að sía leikjasafnið nákvæmlega eftir
+establishment status / íslenskri flóru og fullgera íslensk heiti fyrir allar leikjategundir.
 
-GitHub Pages mun þá birta `index.html` sem forsíðu verkefnisins.
+## GitHub Pages
 
-## Myndir
+Settu skrárnar í root á repository og notaðu:
 
-Myndirnar í þessari frumgerð eru sóttar af natt.is / Náttúrufræðistofnun Íslands.
-Áður en leikurinn er birtur opinberlega til almennrar dreifingar er ráðlegt að staðfesta endurnýtingarleyfi fyrir myndirnar.
+Settings → Pages → Deploy from a branch → main → /(root)
 
-## Tækni
+## Gögn
 
-- HTML
-- CSS
-- Vanilla JavaScript
-- Engin uppsetning eða build-skref
+Wasowicz P (2020), Annotated Checklist of Vascular Plants of Iceland.
+Natural Science Institute of Iceland. CC BY 4.0.
+GBIF dataset key: a762b932-2791-40cb-891e-e11aab6b4efe

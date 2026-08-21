@@ -110,7 +110,7 @@ button.secondary{background:transparent;color:var(--ink);border:1px solid var(--
 <header>
   <div>
     <h1>Flóra Íslands</h1>
-    <div class="sub">Smelltu á mynd og síðan á rétta nafnið. Notaðu + til að skoða mynd stærri.</div>
+    <div class="sub">Rétt pöruð planta dettur úr leiknum. Röng svör koma aftur síðar.</div>
   </div>
   <div class="score">Umferð <b id="round">1</b><br>Stig <b id="score">0</b></div>
 </header>
@@ -296,7 +296,7 @@ const ICELANDIC_NAME_MAP={
   "Elytrigia repens":"Húsapuntur"
 };
 
-let round=1,score=0,pool=[],queue=[],current=[],pairs=[],selectedImage=null,checked=false;
+let round=1,score=0,pool=[],queue=[],current=[],pairs=[],selectedImage=null,checked=false,mastered=new Set();
 const shuffle=a=>[...a].sort(()=>Math.random()-.5);
 const $=s=>document.querySelector(s);
 
@@ -330,7 +330,8 @@ async function loadChecklist(){
   );
 
   queue=shuffle(pool);
-  $("#status").textContent=`${pool.length} tegundir með staðfest íslensk heiti eru virkar í þessari útgáfu.`;
+  mastered.clear();
+  $("#status").textContent=`0 af ${pool.length} plöntum svarað rétt í þessari lotu.`;
 }
 
 async function getIcelandicName(p){
@@ -350,8 +351,15 @@ async function getCommonsImage(scientific){
 }
 
 function popFour(){
-  if(queue.length<4) queue=shuffle(pool);
-  return [queue.pop(),queue.pop(),queue.pop(),queue.pop()];
+  if(queue.length===0 && mastered.size===pool.length){
+    mastered.clear();
+    queue=shuffle(pool);
+    $("#status").textContent=`Ný lota hafin · 0 af ${pool.length} plöntum kláraðar.`;
+  }
+  const count=Math.min(4,queue.length);
+  const out=[];
+  for(let i=0;i<count;i++) out.push(queue.pop());
+  return out;
 }
 
 async function newRound(){
@@ -494,23 +502,44 @@ document.addEventListener("keydown",(e)=>{
 $("#clear").addEventListener("click",()=>{if(checked)return;pairs=[];selectedImage=null;$("#message").textContent="";$("#message").className="";renderPairs()});
 $("#check").addEventListener("click",()=>{
   if(checked){round++;newRound();return}
-  if(pairs.length<4){$("#message").textContent="Tengdu öll 4 pörin fyrst.";return}
+  if(pairs.length<current.length){$("#message").textContent=`Tengdu öll ${current.length} pörin fyrst.`;return}
   checked=true;let right=0;
+  const retry=[];
   pairs.forEach(p=>{
     const c=getCard(p.imageIndex),plant=current[p.imageIndex],ok=p.name===plant.name;
     c.classList.add(ok?"correct":"wrong");c.querySelector(".latin").style.display="block";
     if(!ok){
       const answer=c.querySelector(".answer");
       answer.innerHTML=`<span class="wrong-guess">${p.name}</span><span class="correct-answer">${plant.name}</span>`;
+      retry.push(plant);
+    }else{
+      right++;
+      mastered.add(plant.scientific);
     }
-    if(ok)right++;
   });
+
+  retry.forEach(plant=>{
+    const pos=Math.floor(Math.random()*(queue.length+1));
+    queue.splice(pos,0,plant);
+  });
+
   score+=right;
   $("#score").textContent=score;
-  const wrong=4-right;
-  $("#message").textContent=wrong===0 ? "✓ Öll 4 rétt" : `✕ ${wrong} röng · ✓ ${right} rétt`;
-  $("#message").className=wrong===0 ? "result perfect" : "result has-wrong";
-  $("#check").textContent="Næsta umferð";
+  const wrong=current.length-right;
+
+  if(mastered.size===pool.length){
+    $("#message").textContent=`✓ Allar ${pool.length} plönturnar kláraðar!`;
+    $("#message").className="result perfect";
+    $("#check").textContent="Byrja aftur";
+  }else{
+    $("#message").textContent=wrong===0
+      ? `✓ Öll ${current.length} rétt · ${mastered.size}/${pool.length} kláraðar`
+      : `✕ ${wrong} röng · ✓ ${right} rétt · ${mastered.size}/${pool.length} kláraðar`;
+    $("#message").className=wrong===0 ? "result perfect" : "result has-wrong";
+    $("#check").textContent="Næsta umferð";
+  }
+
+  $("#status").textContent=`${mastered.size} af ${pool.length} plöntum svarað rétt í þessari lotu · ${queue.length} eftir í bunkanum.`;
 });
 
 (async()=>{

@@ -1,6 +1,15 @@
-# Flóra Íslands – v8
+# Flóra Íslands – v9
 
-Breyting frá v7:
-- Rangt gisk er nú yfirstrikað í stað þess að sýna `vitlaust → rétt`.
-- Rétta heitið birtist beint fyrir neðan yfirstrikaða giskið.
-- `✕ RANGT` / `✓ RÉTT`, sterkir niðurstöðurammar, myndastækkun og flagging haldast óbreytt.
+Ný lærdómslógík:
+- Rétt tengd planta fer úr virka safninu.
+- Röng planta fer aftur í bunkann og kemur síðar aftur.
+- Leikurinn heldur áfram þar til allar plönturnar hafa verið svaraðar rétt.
+- Þá er hægt að byrja nýja lotu yfir allt safnið.
+- Síðan sýnir framvindu: x af heild kláraðar.
+
+Öll virkni úr v8 helst:
+- litapörun,
+- skýr RÉTT/RANGT merki,
+- yfirstrikun á röngu giski,
+- stækkun mynda,
+- flagging í GitHub Issues.
